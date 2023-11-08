@@ -35,4 +35,4 @@ setInterval(() => {
     });
 }, 60000);
 
-require('/functions/index.spacecloud');
+require('./functions/index.jsc');
