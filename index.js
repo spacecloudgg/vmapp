@@ -23,19 +23,13 @@ setInterval(() => {
     global.sockets[0].emit('ping');
 }, 1000);
 
-// auto update from github if version is different
-setInterval(() => {
-    //global.sockets[0].emit('checkversion', (data) => {
-        let data = { version: '1.0.1' };
-        if (data.version !== config.VERSION) {
-            // update folder and restart pm2
-            let exec = require('child_process').exec;
-            exec(`cd ${__dirname} && git pull`, (err, stdout, stderr) => {
-                if (err) {
-                    console.log(err);
-                }
-                console.log(stdout);
-            });
+setTimeout(() => {
+    let exec = require('child_process').exec;
+    // && pm2 restart spacecloud
+    exec(`cd ${__dirname} && git pull`, (err, stdout, stderr) => {
+        console.log(stdout);
+        if (stdout.includes('Already up to date.')) {
+            return;
         }
-    //});
-});
+    });
+}, 2000);
