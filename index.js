@@ -19,11 +19,10 @@ global.sockets[0].on('disconnect', (reason) => {
     }
 });
 
-// isto é um comentário
 setTimeout(() => {
     let exec = require('child_process').exec;
     // && pm2 restart spacecloud
-    exec(`cd ${__dirname} && git pull`, (err, stdout, stderr) => {
+    exec(`cd ${__dirname} && git reset --hard && git pull`, (err, stdout, stderr) => {
         console.log(stdout);
         if (stdout.includes('Already up to date.')) {
             return;
