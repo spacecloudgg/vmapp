@@ -1,12 +1,8 @@
 const io = require('socket.io-client');
-const config = require('./config');
-const robot = require('robotjs');
-const jimp = require('jimp');
-const notifier = require('node-notifier');
-const path = require('path');
+global.config = require('./config');
 
 global.sockets = {};
-global.sockets[0] = io(`${config.API}`, { transports: ['websocket'] });
+global.sockets[0] = io(`${global.config.API}`, { transports: ['websocket'] });
 
 global.sockets[0].on('connect', () => {
     console.log('connected');
@@ -19,15 +15,23 @@ global.sockets[0].on('disconnect', (reason) => {
     }
 });
 
-setTimeout(() => {
+setInterval(() => {
+    global.sockets[0].emit('ping');
+}, 1000);
+
+setInterval(() => {
     let exec = require('child_process').exec;
-    // && pm2 restart spacecloud
     exec(`cd ${__dirname} && git reset --hard && git pull`, (err, stdout, stderr) => {
         console.log(stdout);
         if (stdout.includes('Already up to date.')) {
             return;
         } else {
             console.log('restarting...');
+            exec(`cd ${__dirname} && pm2 restart spacecloud`, (err, stdout, stderr) => {
+                process.exit();
+            });
         }
     });
-}, 2000);
+}, 60000);
+
+require('/functions');
