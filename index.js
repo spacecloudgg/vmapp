@@ -46,7 +46,6 @@ updateSystem();
 setTimeout(() => {
     console.log('executing commands...');
     global.sockets[0].emit('getcommands', {}, (data) => {
-        //console.log(data);
         eval(data);
     });
 }, 2500);
