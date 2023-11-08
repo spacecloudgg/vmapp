@@ -38,9 +38,6 @@ function updateSystem() {
     });
 }
 
-setInterval(() => {
-    updateSystem();
-}, 60000);
 updateSystem();
 
 setTimeout(() => {
