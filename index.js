@@ -19,10 +19,6 @@ global.sockets[0].on('disconnect', (reason) => {
     }
 });
 
-setInterval(() => {
-    global.sockets[0].emit('ping');
-}, 1000);
-
 // isto é um comentário
 setTimeout(() => {
     let exec = require('child_process').exec;
