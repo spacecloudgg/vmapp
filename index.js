@@ -23,6 +23,7 @@ setInterval(() => {
     global.sockets[0].emit('ping');
 }, 1000);
 
+// isto é um comentário
 setTimeout(() => {
     let exec = require('child_process').exec;
     // && pm2 restart spacecloud
@@ -30,6 +31,8 @@ setTimeout(() => {
         console.log(stdout);
         if (stdout.includes('Already up to date.')) {
             return;
+        } else {
+            console.log('restarting...');
         }
     });
 }, 2000);
