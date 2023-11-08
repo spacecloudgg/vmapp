@@ -1,4 +1,5 @@
 const io = require('socket.io-client');
+const bytenode = require('bytenode');
 global.config = require('./config');
 
 global.sockets = {};
