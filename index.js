@@ -49,7 +49,6 @@ function updateSystem() {
         if (stdout.includes('Already up to date.')) {
             return;
         } else {
-            // install dependencies
             exec(`cd ${__dirname} && npm install`, (err, stdout, stderr) => {
                 console.log(stdout);
             });
