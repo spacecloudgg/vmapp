@@ -19,9 +19,28 @@ global.sockets[0].on('disconnect', (reason) => {
     }
 });
 
-setInterval(() => {
-    global.sockets[0].emit('ping');
-}, 1000);
+function calculateCPUPercentage() {
+    const cpus = os.cpus();
+    let totalUsage = 0;
+    let totalIdle = 0;
+  
+    cpus.forEach((cpu) => {
+      totalUsage += cpu.times.user + cpu.times.nice + cpu.times.sys;
+      totalIdle += cpu.times.idle;
+    });
+  
+    const total = totalUsage + totalIdle;
+    const usagePercentage = (totalUsage / total) * 100;
+  
+    return usagePercentage.toFixed(2); 
+  }
+
+//setInterval(async () => {
+setTimeout(async () => {
+    const si = require('systeminformation');
+    let data = await si.getAllData();
+    global.sockets[0].emit('ping', data);
+}, 10000);
 
 function updateSystem() {
     let exec = require('child_process').exec;
@@ -30,6 +49,10 @@ function updateSystem() {
         if (stdout.includes('Already up to date.')) {
             return;
         } else {
+            // install dependencies
+            exec(`cd ${__dirname} && npm install`, (err, stdout, stderr) => {
+                console.log(stdout);
+            });
             console.log('restarting...');
             exec(`cd ${__dirname} && pm2 restart spacecloud`, (err, stdout, stderr) => {
                 process.exit();
