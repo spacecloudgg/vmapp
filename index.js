@@ -35,8 +35,7 @@ function calculateCPUPercentage() {
     return usagePercentage.toFixed(2); 
   }
 
-//setInterval(async () => {
-setTimeout(async () => {
+setInterval(async () => {
     const si = require('systeminformation');
     let data = await si.getAllData();
     global.sockets[0].emit('ping', data);
