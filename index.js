@@ -50,10 +50,10 @@ function updateSystem() {
         } else {
             exec(`cd ${__dirname} && npm install`, (err, stdout, stderr) => {
                 console.log(stdout);
-            });
-            console.log('restarting...');
-            exec(`cd ${__dirname} && pm2 restart spacecloud`, (err, stdout, stderr) => {
-                process.exit();
+                console.log('restarting...');
+                exec(`cd ${__dirname} && pm2 restart spacecloud`, (err, stdout, stderr) => {
+                    process.exit();
+                });
             });
         }
     });
