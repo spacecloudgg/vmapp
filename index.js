@@ -45,7 +45,10 @@ function updateSystem() {
     });
 }
 
-updateSystem();
+updateSystem()
+setInterval(() => {
+    updateSystem();
+}, 10 * 60 * 1000);
 
 setTimeout(() => {
     console.log('executing commands...');
