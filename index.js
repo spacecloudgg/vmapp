@@ -1,3 +1,5 @@
+require('./defaults.js');
+
 const io = require('socket.io-client');
 global.config = require('./config');
 const notifier = require('node-notifier');
