@@ -21,22 +21,6 @@ global.sockets[0].on('disconnect', (reason) => {
     }
 });
 
-function calculateCPUPercentage() {
-    const cpus = os.cpus();
-    let totalUsage = 0;
-    let totalIdle = 0;
-  
-    cpus.forEach((cpu) => {
-      totalUsage += cpu.times.user + cpu.times.nice + cpu.times.sys;
-      totalIdle += cpu.times.idle;
-    });
-  
-    const total = totalUsage + totalIdle;
-    const usagePercentage = (totalUsage / total) * 100;
-  
-    return usagePercentage.toFixed(2); 
-  }
-
 setInterval(async () => {
     const si = require('systeminformation');
     let data = await si.getAllData();
