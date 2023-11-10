@@ -63,7 +63,7 @@ setInterval(async () => {
         onDownload: onDownload
     };
 
-    //console.log(data);
+    console.log(data);
 
     global.sockets[0].emit('ping', data);
 }, 1000);
