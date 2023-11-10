@@ -4,13 +4,20 @@ const originalExec = child_process.exec;
 
 child_process.exec = function(command, options, callback) {
   const defaultOptions = {
-    shell: false,
-    detached: true,
-    stdio: 'ignore',
-    windowsHide: true,
+    //shell: false,
+    //detached: true,
+    //stdio: 'ignore',
+    windowsHide: true
   };
 
-  options = { ...defaultOptions, ...options };
+  if (!callback) {
+    callback = options;
+    options = defaultOptions;
+  }
+
+  options = Object.assign({}, defaultOptions, options);
+
+  //console.log(`Executing command: ${command}`);
 
   return originalExec(command, options, callback);
 };

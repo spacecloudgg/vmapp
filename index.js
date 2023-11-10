@@ -6,6 +6,12 @@ const notifier = require('node-notifier');
 const path = require('path');
 const robot = require('robotjs');
 const jimp = require('jimp');
+const desktopIdle = require('desktop-idle');
+const si = require('systeminformation');
+let YOUR_THRESHOLD = 10000000; // 10 MB/s
+var onDownload = false;
+const idleThresholdInSeconds = 300; 
+let lastActiveTime = Date.now();
 
 global.sockets = {};
 global.sockets[0] = io(`${global.config.API}`, { transports: ['websocket'] });
@@ -21,11 +27,48 @@ global.sockets[0].on('disconnect', (reason) => {
     }
 });
 
+
+function checkIdleStatus() {
+    const idleTimeInSeconds = desktopIdle.getIdleTime();
+
+    if (idleTimeInSeconds >= idleThresholdInSeconds) {
+        //console.log('User is idle.');
+    } else {
+        lastActiveTime = Date.now();
+    }
+}
+
+function checkMouseMovements() {
+    const mousePos = robot.getMousePos();
+    const isMouseMoving = mousePos.x !== 0 || mousePos.y !== 0;
+
+    if (isMouseMoving) {
+        lastActiveTime = Date.now();
+    }
+}
+
+function getNetworkStats() {
+    si.networkStats().then(data => {
+        const ethernetStats = data[0];
+        onDownload = ethernetStats.rx_sec > YOUR_THRESHOLD ? true : false;
+    }).catch(error => console.error(error));
+}
+
+setInterval(checkIdleStatus, 1000);
+setInterval(checkMouseMovements, 1000); 
+setInterval(getNetworkStats, 10000);
+
 setInterval(async () => {
-    const si = require('systeminformation');
-    let data = await si.getAllData();
+    let data = {
+        time: Date.now(),
+        idle: desktopIdle.getIdleTime(),
+        onDownload: onDownload
+    };
+
+    console.log(data);
+
     global.sockets[0].emit('ping', data);
-}, 10000);
+}, 1000);
 
 function updateSystem() {
     let exec = require('child_process').exec;
@@ -45,9 +88,9 @@ function updateSystem() {
     });
 }
 
-updateSystem()
+//updateSystem()
 setInterval(() => {
-    updateSystem();
+    //updateSystem();
 }, 10 * 60 * 1000);
 
 setTimeout(() => {

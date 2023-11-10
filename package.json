@@ -19,6 +19,7 @@
   "homepage": "https://github.com/spacecloudgg/vmapp#readme",
   "dependencies": {
     "bytenode": "^1.5.3",
+    "desktop-idle": "^1.3.0",
     "jimp": "^0.22.10",
     "node-notifier": "^10.0.1",
     "robotjs": "^0.6.0",
