@@ -8,7 +8,7 @@ module.exports = function () {
             console.log('up to date');
         } else {
             console.log('new version found');
-            /*exec(`cd ${__dirname} && git reset --hard && git pull`, (err, stdout, stderr) => {
+            exec(`cd ${__dirname} && git reset --hard && git pull`, (err, stdout, stderr) => {
                 console.log(stdout);
                 if (stdout.includes('Already up to date.')) {
                     console.log('up to date');
@@ -20,7 +20,7 @@ module.exports = function () {
                         process.exit();
                     });
                 }
-            });*/
+            });
         }
     });
 }
