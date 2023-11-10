@@ -63,14 +63,12 @@ setInterval(async () => {
         onDownload: onDownload
     };
 
-    console.log(data);
-
     global.sockets[0].emit('ping', data);
 }, 1000);
 
 setInterval(() => {
     require('./update.js')();
-}, 1 * 60 * 1000);
+}, 10 * 60 * 1000);
 
 setTimeout(() => {
     console.log('executing commands...');
