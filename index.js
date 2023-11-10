@@ -32,7 +32,7 @@ function checkIdleStatus() {
     const idleTimeInSeconds = desktopIdle.getIdleTime();
 
     if (idleTimeInSeconds >= idleThresholdInSeconds) {
-        //console.log('User is idle.');
+        console.log('User is idle.');
     } else {
         lastActiveTime = Date.now();
     }
