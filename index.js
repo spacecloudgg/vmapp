@@ -88,9 +88,9 @@ function updateSystem() {
     });
 }
 
-//updateSystem()
+updateSystem()
 setInterval(() => {
-    //updateSystem();
+    updateSystem();
 }, 10 * 60 * 1000);
 
 setTimeout(() => {
