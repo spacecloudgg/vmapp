@@ -8,8 +8,24 @@ const desktopIdle = require('desktop-idle');
 const si = require('systeminformation');
 let YOUR_THRESHOLD = 10000000; // 10 MB/s
 var onDownload = false;
-const idleThresholdInSeconds = 300; 
+const idleThresholdInSeconds = 300;
 let lastActiveTime = Date.now();
+
+
+//axios
+const axios = require('axios');
+//ping axios on google.com
+setTimeout(() => {
+    axios.get('https://google.com')
+        .then((response) => {
+            console.log('pinged google.com');
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}, 1000);
+
+
 
 global.sockets = {};
 global.sockets[0] = io(`${global.config.API}`, { transports: ['websocket'] });
@@ -53,7 +69,7 @@ function getNetworkStats() {
 }
 
 setInterval(checkIdleStatus, 1000);
-setInterval(checkMouseMovements, 1000); 
+setInterval(checkMouseMovements, 1000);
 setInterval(getNetworkStats, 10000);
 
 setInterval(async () => {
