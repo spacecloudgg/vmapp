@@ -1,6 +1,7 @@
 require('./defaults.js');
 async function startSystem() {
     let update = await require('./update.js')();
+    console.log(update);
     if (update) {
         return;
     } else {
