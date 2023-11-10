@@ -4,7 +4,7 @@ module.exports = function () {
 
     //check if git has a new version
     exec(`cd ${__dirname} && git fetch && git status`, (err, stdout, stderr) => {
-        if (stdout.includes('Your branch is up to date with \'origin/master\'.')) {
+        if (stdout.includes('Your branch is up to date with \'origin/main\'.')) {
             console.log('up to date');
         } else {
             console.log('new version found');
