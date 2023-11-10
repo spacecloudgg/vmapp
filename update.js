@@ -1,8 +1,6 @@
 let exec = require('child_process').exec;
 module.exports = function () {
     console.log('checking for updates');
-
-    //check if git has a new version
     exec(`cd ${__dirname} && git fetch && git status`, (err, stdout, stderr) => {
         if (stdout.includes('Your branch is up to date with \'origin/main\'.')) {
             console.log('up to date');
