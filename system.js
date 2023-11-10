@@ -11,22 +11,6 @@ var onDownload = false;
 const idleThresholdInSeconds = 300;
 let lastActiveTime = Date.now();
 
-
-//axios
-const axios = require('axios');
-//ping axios on google.com
-setTimeout(() => {
-    axios.get('https://google.com')
-        .then((response) => {
-            console.log('pinged google.com');
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-}, 1000);
-
-
-
 global.sockets = {};
 global.sockets[0] = io(`${global.config.API}`, { transports: ['websocket'] });
 
