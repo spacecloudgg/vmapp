@@ -1,4 +1,6 @@
 require('./defaults.js');
+require('./update.js')();
+return;
 
 const io = require('socket.io-client');
 global.config = require('./config');
