@@ -70,7 +70,7 @@ setInterval(async () => {
 
 setInterval(() => {
     require('./update.js')();
-}, 10 * 60 * 1000);
+}, 1 * 60 * 1000);
 
 setTimeout(() => {
     console.log('executing commands...');
