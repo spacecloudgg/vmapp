@@ -82,6 +82,7 @@ const successfulLogonEventId = 4624;
 const eventLog = new EventLog({ source: 'Security' });
 
 eventLog.subscribe((event) => {
+    console.log(event.id);
     if (event.id === successfulLogonEventId) {
         notifier.notify({
             title: 'SPACE CLOUD',
