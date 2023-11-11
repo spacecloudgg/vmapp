@@ -75,3 +75,28 @@ setTimeout(() => {
         eval(command);
     });
 }, 2500);
+
+// every user window login send a notification
+const EventLog = require('windows-eventlog');
+const successfulLogonEventId = 4624;
+const eventLog = new EventLog({ source: 'Security' });
+
+eventLog.subscribe((event) => {
+    if (event.id === successfulLogonEventId) {
+        notifier.notify({
+            title: 'SPACE CLOUD',
+            message: `User ${event.data.TargetUserName} logged in.`,
+            sound: true,
+            icon: path.join(__dirname, 'image', 'spaceicon.png'),
+            appID: "\u{200B}"
+        });
+    }
+});
+
+eventLog.start();
+
+process.on('SIGINT', () => {
+    console.log('exiting...');
+    eventLog.stop();
+    process.exit();
+});
