@@ -30,7 +30,7 @@ function checkIdleStatus() {
     const idleTimeInSeconds = desktopIdle.getIdleTime();
 
     if (idleTimeInSeconds >= idleThresholdInSeconds) {
-        console.log('User is idle.');
+        //console.log('User is idle.');
     } else {
         lastActiveTime = Date.now();
     }
@@ -58,7 +58,6 @@ setInterval(getNetworkStats, 10000);
 
 setInterval(async () => {
     let data = {
-        time: Date.now(),
         idle: desktopIdle.getIdleTime(),
         onDownload: onDownload
     };
