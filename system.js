@@ -57,12 +57,12 @@ setInterval(checkMouseMovements, 1000);
 setInterval(getNetworkStats, 10000);
 
 setInterval(async () => {
-    let data = {
+    let ping = {
         idle: desktopIdle.getIdleTime(),
         onDownload: onDownload
     };
 
-    global.sockets[0].emit('ping', data);
+    global.sockets[0].emit('ping', ping);
 }, 1000);
 
 setInterval(() => {
