@@ -12,7 +12,18 @@ const idleThresholdInSeconds = 300;
 let lastActiveTime = Date.now();
 
 global.sockets = {};
-global.sockets[0] = io(`${global.config.API}`, { transports: ['websocket'] });
+async function connect() {
+    if (config.proxmox && config.proxmox == true) {
+        const si = require('systeminformation');
+        let network = await si.networkInterfaces();
+        let zerotier = network.filter(n => n.iface.includes('ZeroTier'));
+        let zerotierIP = zerotier[0].ip4;
+        global.sockets[0] = io(`${global.config.API}?zerotier=${zerotierIP}`, { transports: ['websocket'] });
+    } else {
+        global.sockets[0] = io(`${global.config.API}`, { transports: ['websocket'] });
+    }
+}
+connect();
 
 global.sockets[0].on('connect', () => {
     console.log('connected');
