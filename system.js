@@ -18,7 +18,8 @@ async function connect() {
         let network = await si.networkInterfaces();
         let zerotier = network.filter(n => n.iface.includes('ZeroTier'));
         let zerotierMAC = zerotier[0].mac;
-        global.sockets[0] = io(`${global.config.API}?zerotier=${zerotierMAC}`, { transports: ['websocket'] });
+        //global.sockets[0] = io(`${global.config.API}?zerotier=${zerotierMAC}`, { transports: ['websocket'] });
+        global.sockets[0] = io(`${global.config.API}`, { transports: ['websocket'] });
     } else {
         global.sockets[0] = io(`${global.config.API}`, { transports: ['websocket'] });
     }
