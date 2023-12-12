@@ -16,10 +16,8 @@ async function connect() {
     if (config.proxmox && config.proxmox == true) {
         const si = require('systeminformation');
         let network = await si.networkInterfaces();
-        let zerotier = network.filter(n => n.iface.includes('ZeroTier'));
-        let zerotierMAC = zerotier[0].mac;
-        //global.sockets[0] = io(`${global.config.API}?zerotier=${zerotierMAC}`, { transports: ['websocket'] });
-        global.sockets[0] = io(`${global.config.API}`, { transports: ['websocket'] });
+        let ipv4 = network[0].ip4;
+        global.sockets[0] = io(`${global.config.API}?ipv4=${ipv4}`, { transports: ['websocket'] });
     } else {
         global.sockets[0] = io(`${global.config.API}`, { transports: ['websocket'] });
     }
