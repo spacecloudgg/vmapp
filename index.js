@@ -11,10 +11,13 @@ async function startSystem() {
                 let vpndata = global.config.vpn;
                 await disconnectVPN(vpndata.name);
                 await connectVPN(vpndata.name, vpndata.username, vpndata.password);
+                require('./system.js');
+                reconnectLoop(vpndata.name, vpndata.username, vpndata.password);
+            } else {
+                require('./system.js');
             }
 
-            require('./system.js');
-            await reconnectLoop(global.config.vpn.name);
+            
         } catch (e) {
             console.log(e);
             if (e.code === 'MODULE_NOT_FOUND') {
@@ -53,12 +56,12 @@ async function connectVPN(vpnName, vpnUsername, vpnPassword) {
     });
 }
 
-async function reconnectLoop(vpnName) {
+async function reconnectLoop(vpnName, vpnUsername, vpnPassword) {
     while (true) {
         exec(`rasdial ${vpnName} | find /i "Disconnected"`, (error, stdout, stderr) => {
             setTimeout(async () => {
-                await disconnectVPN();
-                await connectVPN();
+                await disconnectVPN(vpnName);
+                await connectVPN(vpnName, vpnUsername, vpnPassword);
             }, 5000);
         });
 
