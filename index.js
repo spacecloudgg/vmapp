@@ -1,5 +1,6 @@
 require('./defaults.js');
 global.config = require('./config');
+const exec = require('child_process').exec;
 async function startSystem() {
     let update = await require('./update.js')();
     if (update) {
