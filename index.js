@@ -58,24 +58,17 @@ async function connectVPN(vpnName, vpnUsername, vpnPassword) {
 
 async function reconnectLoop(vpnName, vpnUsername, vpnPassword) {
     while (true) {
-        /*
-        rasdial %vpnName% | find /i "Disconnected" > nul
-
-if errorlevel 1 (
-    rem VPN is connected.
-) else (
-    rem VPN is disconnected. Reconnecting...
-    */
-        exec(`rasdial ${vpnName} | find /i "Disconnected" > nul`, (error, stdout, stderr) => {
-            if (error.code === 1) {
-                console.log('Já está conectado');
-            } else {
-                console.log('error');
+        exec(`rasdial ${vpnName} ${vpnUsername} ${vpnPassword}`, (error, stdout, stderr) => {
+            console.log('error');
                 console.log(error);
                 console.log('stdout');
                 console.log(stdout);
                 console.log('stderr');
                 console.log(stderr);
+            if (error.code === 1) {
+                console.log('Já está conectado');
+            } else {
+                
                 console.log('Reconectando VPN');
                 setTimeout(async () => {
                     //await disconnectVPN(vpnName);
