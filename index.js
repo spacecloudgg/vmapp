@@ -61,8 +61,16 @@ async function reconnectLoop(vpnName, vpnUsername, vpnPassword) {
         exec(`rasdial ${vpnName} ${vpnUsername} ${vpnPassword}`, (error, stdout, stderr) => {
             if (stdout.includes('J� est� conectado') || stdout.includes('Already connected')) {
                 //console.log('Já está conectado');
+            } else {
+                console.log('Reconectando VPN');
+                if (error) {
+                    console.log('VPN Connection Failed');
+                } else {
+                    console.log('VPN Connection Successful');
+                }
             }
         });
+
         await new Promise(resolve => setTimeout(resolve, 5000));
     }
 }
