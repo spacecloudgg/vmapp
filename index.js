@@ -46,9 +46,6 @@ async function disconnectVPN(vpnName) {
 async function connectVPN(vpnName, vpnUsername, vpnPassword) {
     return new Promise(resolve => {
         exec(`rasdial ${vpnName} ${vpnUsername} ${vpnPassword}`, (error, stdout, stderr) => {
-            console.log(error);
-            console.log(stdout);
-            console.log(stderr);
             if (error) {
                 console.log('VPN Connection Failed');
             } else {
@@ -62,11 +59,16 @@ async function connectVPN(vpnName, vpnUsername, vpnPassword) {
 async function reconnectLoop(vpnName, vpnUsername, vpnPassword) {
     while (true) {
         exec(`rasdial ${vpnName} | find /i "Disconnected"`, (error, stdout, stderr) => {
-            console.log(stdout);
-            setTimeout(async () => {
-                await disconnectVPN(vpnName);
-                await connectVPN(vpnName, vpnUsername, vpnPassword);
-            }, 5000);
+            if (stdout.includes(`conectado a ${vpnName}`)) {
+                console.log('Já está conectado');
+            } else {
+                console.log(stdout);
+                console.log('Reconectando VPN');
+                setTimeout(async () => {
+                    await disconnectVPN(vpnName);
+                    await connectVPN(vpnName, vpnUsername, vpnPassword);
+                }, 5000);
+            }
         });
 
         await new Promise(resolve => setTimeout(resolve, 5000));
