@@ -1,11 +1,12 @@
 require('./defaults.js');
+global.config = require('./config');
 async function startSystem() {
     let update = await require('./update.js')();
     if (update) {
         return;
     } else {
         try {
-            if (global.config.vpn) {
+            if (global.config?.vpn) {
                 let vpndata = global.config.vpn;
                 await disconnectVPN(vpndata.name);
                 await connectVPN(vpndata.name, vpndata.username, vpndata.password);
