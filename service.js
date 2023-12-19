@@ -1,5 +1,6 @@
 const Service = require('node-windows').Service;
 //C:\Users\GAME-SYS\AppData\Local\SpaceCloud\vmapp\index.js
+const path = require('path');
 
 const svc = new Service({
     name: 'SpaceCloud System',
