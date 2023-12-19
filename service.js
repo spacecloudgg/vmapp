@@ -6,15 +6,15 @@ const svc = new Service({
     description: 'SpaceCloud System',
     script: 'C:\\Users\\GAME-SYS\\AppData\\Local\\SpaceCloud\\vmapp\\resurrect.js',
 });
-/*svc.on('install', () => {
+svc.on('install', () => {
     svc.start();
 });
-svc.install();*/
+svc.install();
 
 //uninstall
-svc.on('uninstall', () => {
+/*svc.on('uninstall', () => {
     console.log('Uninstall complete.');
     console.log('The service exists: ', svc.exists);
 });
 
-svc.uninstall();
+svc.uninstall();*/
