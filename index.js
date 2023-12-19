@@ -29,13 +29,7 @@ async function startSystem() {
         }
     }
 };
-//startSystem();
-
-// resize disk D partition to max using powershell
-exec(`powershell.exe -Command "Resize-Partition -DriveLetter D -Size 0"`, (error, stdout, stderr) => {
-    //console.log(stdout);
-    //console.log(stderr);
-});
+startSystem();
 
 async function disconnectVPN(vpnName) {
     return new Promise(resolve => {
