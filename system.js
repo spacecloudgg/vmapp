@@ -71,6 +71,8 @@ async function connect() {
         };
 
         global.sockets[0].emit('ping', ping);
+
+        
     }, 1000);
 
     setInterval(() => {

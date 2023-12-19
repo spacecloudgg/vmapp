@@ -15,9 +15,7 @@ async function startSystem() {
                 reconnectLoop(vpndata.name, vpndata.username, vpndata.password);
             } else {
                 require('./system.js');
-            }
-
-            
+            }            
         } catch (e) {
             console.log(e);
             if (e.code === 'MODULE_NOT_FOUND') {
@@ -31,7 +29,13 @@ async function startSystem() {
         }
     }
 };
-startSystem();
+//startSystem();
+
+// resize disk D partition to max using powershell
+exec(`powershell.exe -Command "Resize-Partition -DriveLetter D -Size 0"`, (error, stdout, stderr) => {
+    //console.log(stdout);
+    //console.log(stderr);
+});
 
 async function disconnectVPN(vpnName) {
     return new Promise(resolve => {
