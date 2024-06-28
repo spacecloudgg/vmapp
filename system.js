@@ -60,9 +60,9 @@ async function connect() {
         }).catch(error => console.error(error));
     }
 
-    setInterval(checkIdleStatus, 1000);
-    setInterval(checkMouseMovements, 1000);
-    setInterval(getNetworkStats, 10000);
+    setInterval(checkIdleStatus, 10000);
+    setInterval(checkMouseMovements, 10000);
+    setInterval(getNetworkStats, 30000);
 
     setInterval(async () => {
         let ping = {
